@@ -1,6 +1,16 @@
 # monitor.py
 # monitor.py / Configure a basic Evidently data drift or model monitoring report
+# monitor.py
 import pandas as pd
+
+# Compatibility patch for Python 3.13 & Pandas 2.2+/3.x
+if not hasattr(pd.core.dtypes.common, 'infer_dtype_from_object'):
+    try:
+        from pandas.api.types import infer_dtype
+        pd.core.dtypes.common.infer_dtype_from_object = infer_dtype
+    except ImportError:
+        pass
+
 from evidently.report import Report
 from evidently.metric_preset import DataDriftPreset
 
